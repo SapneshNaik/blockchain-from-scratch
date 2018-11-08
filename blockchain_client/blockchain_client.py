@@ -93,6 +93,8 @@ def generate_transaction():
 	recipient_address = request.form['recipient_address']
 	value = request.form['amount']
 
+    value = str(int(request.form['amount']) - 1)
+
 	transaction = Transaction(sender_address, sender_private_key, recipient_address, value)
 
 	response = {'transaction': transaction.to_dict(), 'signature': transaction.sign_transaction()}
