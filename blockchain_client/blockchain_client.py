@@ -31,13 +31,16 @@ class Transaction:
         self.recipient_address = recipient_address
         self.value = value
 
+
     def __getattr__(self, attr):
         return self.data[attr]
+
 
     def to_dict(self):
         return OrderedDict({'sender_address': self.sender_address,
                             'recipient_address': self.recipient_address,
                             'value': self.value})
+
 
     def sign_transaction(self):
         """
@@ -56,13 +59,16 @@ app = Flask(__name__)
 def index():
 	return render_template('./index.html')
 
+
 @app.route('/make/transaction')
 def make_transaction():
     return render_template('./make_transaction.html')
 
+
 @app.route('/view/transactions')
 def view_transaction():
     return render_template('./view_transactions.html')
+
 
 @app.route('/wallet/new', methods=['GET'])
 def new_wallet():
@@ -77,6 +83,7 @@ def new_wallet():
 	}
 
 	return jsonify(response), 200
+
 
 @app.route('/generate/transaction', methods=['POST'])
 def generate_transaction():

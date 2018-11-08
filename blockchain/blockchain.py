@@ -153,14 +153,15 @@ CORS(app)
 # Instantiate the Blockchain
 blockchain = Blockchain()
 
+
 @app.route('/')
 def index():
     return render_template('./index.html')
 
+
 @app.route('/configure')
 def configure():
     return render_template('./configure.html')
-
 
 
 @app.route('/transactions/new', methods=['POST'])
@@ -221,7 +222,6 @@ def mine():
     return jsonify(response), 200
 
 
-
 @app.route('/nodes/register', methods=['POST'])
 def register_nodes():
     values = request.form
@@ -240,13 +240,12 @@ def register_nodes():
     return jsonify(response), 201
 
 
-
 @app.route('/nodes/get', methods=['GET'])
 def get_nodes():
     nodes = list(blockchain.nodes)
     response = {'nodes': nodes}
     return jsonify(response), 200
-
+    
 
 
 if __name__ == '__main__':
