@@ -146,38 +146,6 @@ class Blockchain:
         return guess_hash[:difficulty] == '0'*difficulty
 
 
-    def valid_chain(self, chain):
-        """
-        check if a bockchain is valid
-        """
-        last_block = chain[0]
-        current_index = 1
-
-        while current_index < len(chain):
-            block = chain[current_index]
-            #print(last_block)
-            #print(block)
-            #print("\n-----------\n")
-            # Check that the hash of the block is correct
-            if block['previous_hash'] != self.hash(last_block):
-                return False
-
-            # Check that the Proof of Work is correct
-            # Delete the reward transaction
-            transactions = block['transactions'][:-1]
-            # Need to make sure that the dictionary is ordered. Otherwise we'll get a different hash
-            transaction_elements = ['sender_address', 'recipient_address', 'value']
-            transactions = [OrderedDict((k, transaction[k]) for k in transaction_elements) for transaction in transactions]
-
-            if not self.valid_proof(transactions, block['previous_hash'], block['nonce'], MINING_DIFFICULTY):
-                return False
-
-            last_block = block
-            current_index += 1
-
-        return True
-
-
 # Instantiate the Node
 app = Flask(__name__)
 CORS(app)
@@ -290,11 +258,3 @@ if __name__ == '__main__':
     port = args.port
 
     app.run(host='0.0.0.0', port=port)
-
-
-
-
-
-
-
-
