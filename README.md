@@ -21,6 +21,9 @@ This github repository also contains 2 dashboards:
 
 - Works with ```Python 3.6``` 
 - [Anaconda's Python distribution](https://www.continuum.io/downloads) contains all the dependencies for the code to run.
+- flask (```pip3 install flask```) - A lighweight python web framework
+- flask_cors (```pip3 install flask_cors```) - Enable CORS for flask
+- requests (```pip3 install requests```) - Parse http requests
 
 # How to run the code
 

@@ -40,26 +40,10 @@ class Blockchain:
         
         self.transactions = []
         self.chain = []
-        self.nodes = set()
         #Generate random number to be used as node_id
         self.node_id = str(uuid4()).replace('-', '')
         #Create genesis block
         self.create_block(0, '00')
-
-
-    def register_node(self, node_url):
-        """
-        Add a new node to the list of nodes
-        """
-        #Checking node_url has valid format
-        parsed_url = urlparse(node_url)
-        if parsed_url.netloc:
-            self.nodes.add(parsed_url.netloc)
-        elif parsed_url.path:
-            # Accepts an URL without scheme like '192.168.0.5:5000'.
-            self.nodes.add(parsed_url.path)
-        else:
-            raise ValueError('Invalid URL')
 
 
     def verify_transaction_signature(self, sender_address, signature, transaction):
@@ -220,24 +204,6 @@ def mine():
         'previous_hash': block['previous_hash'],
     }
     return jsonify(response), 200
-
-
-@app.route('/nodes/register', methods=['POST'])
-def register_nodes():
-    values = request.form
-    nodes = values.get('nodes').replace(" ", "").split(',')
-
-    if nodes is None:
-        return "Error: Please supply a valid list of nodes", 400
-
-    for node in nodes:
-        blockchain.register_node(node)
-
-    response = {
-        'message': 'New nodes have been added',
-        'total_nodes': [node for node in blockchain.nodes],
-    }
-    return jsonify(response), 201
 
 
 @app.route('/nodes/get', methods=['GET'])
